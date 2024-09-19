@@ -7,7 +7,7 @@
         <p class="text-center">Bootstrap com Laravel.</p>
         
         <div class="text-center">
-            <button class="btn btn-primary">Botão de Teste</button>
+            <button class="btn btn-primary">Botão de Testeeeee</button>
         </div>
     </div>
 @include('includes.scripts')
