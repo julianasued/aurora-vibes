@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html dir="ltr">
 @include('includes.head')
+<head>
+    <style>
+        body {
+            background-color: rgba(37, 115, 251, 0.897); 
+        }
+    </style>
+</head>
 <body>
 <div class="container">
         <h1 class="text-center mt-5">Testando o Bootstrap!</h1>
