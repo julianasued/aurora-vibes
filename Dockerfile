@@ -1,12 +1,7 @@
 FROM richarvey/nginx-php-fpm:latest
 
-# Instalar Node.js e npm
-RUN apk add --no-cache curl \
-    && curl -sL https://unofficial-builds.nodejs.org/download/release/v16.x/node-v16.x-linux-x64-musl.tar.gz | tar -xz \
-    && mv node-v16.x-linux-x64-musl /usr/local/node \
-    && ln -s /usr/local/node/bin/node /usr/bin/node \
-    && ln -s /usr/local/node/bin/npm /usr/bin/npm \
-    && ln -s /usr/local/node/bin/npx /usr/bin/npx
+# Instalar Node.js e npm no Alpine
+RUN apk add --no-cache nodejs npm
 
 # Copiar os arquivos do projeto
 COPY . .
