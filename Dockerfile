@@ -1,16 +1,19 @@
-FROM richarvey/nginx-php-fpm:latest
+# Fase de construção
+FROM node:16 as node-build
 
 # Instalar Node.js e npm
-RUN apt-get update && \
-    apt-get install -y curl && \
-    curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
-    apt-get install -y nodejs && \
-    npm install -g npm
+RUN npm install -g npm
 
-# Copiar os arquivos da aplicação para o contêiner
-COPY . .
+# Fase final
+FROM richarvey/nginx-php-fpm:latest
 
-# Image config
+# Copiar o Node.js da fase anterior
+COPY --from=node-build /usr/local/bin/node /usr/local/bin/
+COPY --from=node-build /usr/local/bin/npm /usr/local/bin/
+
+# Configurar Laravel e a aplicação
+COPY . /var/www/html
+
 ENV SKIP_COMPOSER 1
 ENV WEBROOT /var/www/html/public
 ENV PHP_ERRORS_STDERR 1
