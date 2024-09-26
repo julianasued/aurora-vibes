@@ -1,3 +1,4 @@
+# Fase de build do Node.js
 FROM node:20 AS node-build
 
 # Instalar npm mais recente
@@ -12,9 +13,8 @@ RUN apt-get update && apt-get install -y \
     libstdc++6 \
     && rm -rf /var/lib/apt/lists/*
 
-# Copiar o Node.js da fase anterior
-COPY --from=node-build /usr/local/bin/node /usr/local/bin/
-COPY --from=node-build /usr/local/bin/npm /usr/local/bin/
+# Copiar Node.js e npm da fase anterior
+COPY --from=node-build /usr/local /usr/local/
 
 # Copiar código da aplicação
 COPY . /var/www/html
