@@ -1,7 +1,6 @@
-# Fase de construção
-FROM node:16 as node-build
+FROM node:20 AS node-build
 
-# Instalar Node.js e npm
+# Instalar npm mais recente
 RUN npm install -g npm
 
 # Fase final
