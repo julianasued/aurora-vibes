@@ -7,11 +7,11 @@ RUN npm install -g npm
 # Fase final
 FROM richarvey/nginx-php-fpm:latest
 
-# Instalar dependências que o Node.js requer
-RUN apt-get update && apt-get install -y \
-    libssl-dev \
-    libstdc++6 \
-    && rm -rf /var/lib/apt/lists/*
+# Instalar dependências que o Node.js requer (usando apk para Alpine)
+RUN apk update && apk add --no-cache \
+    libssl1.1 \
+    libstdc++ \
+    && rm -rf /var/cache/apk/*
 
 # Copiar Node.js e npm da fase anterior
 COPY --from=node-build /usr/local /usr/local/
