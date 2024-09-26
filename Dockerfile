@@ -1,5 +1,13 @@
 FROM richarvey/nginx-php-fpm:latest
 
+# Instalar Node.js e npm
+RUN apt-get update && \
+    apt-get install -y curl && \
+    curl -sL https://deb.nodesource.com/setup_16.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g npm
+
+# Copiar os arquivos da aplicação para o contêiner
 COPY . .
 
 # Image config
@@ -17,4 +25,5 @@ ENV LOG_CHANNEL stderr
 # Allow composer to run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
+# Comando inicial
 CMD ["/start.sh"]
