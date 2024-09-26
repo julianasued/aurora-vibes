@@ -13,8 +13,11 @@ RUN apk update && apk add --no-cache \
     libstdc++ \
     && rm -rf /var/cache/apk/*
 
-# Copiar Node.js e npm da fase anterior
-COPY --from=node-build /usr/local /usr/local/
+# Copiar Node.js e npm da fase anterior (binários e bibliotecas)
+COPY --from=node-build /usr/local/bin /usr/local/bin/
+COPY --from=node-build /usr/local/lib /usr/local/lib/
+COPY --from=node-build /usr/local/include /usr/local/include/
+COPY --from=node-build /usr/lib /usr/lib/
 
 # Copiar código da aplicação
 COPY . /var/www/html
