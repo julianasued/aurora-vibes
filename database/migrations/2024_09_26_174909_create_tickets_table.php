@@ -14,6 +14,7 @@ return new class extends Migration
             $table->text('descricao');
             $table->decimal('amount', 8, 2);
             $table->date('vencimento');
+            $table->integer('quantidade');
             $table->foreignId('user_id')
                 ->constrained('users')
                 ->onDelete('cascade');
