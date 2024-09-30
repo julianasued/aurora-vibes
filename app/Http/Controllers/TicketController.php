@@ -78,13 +78,66 @@ class TicketController extends Controller
         //
     }
 
+    public function comprar(Request $request, Ticket $ticket)
+    {
+        // Verificar se o ticket ainda está disponível
+        if ($ticket->quantidade < 1) {
+            return redirect()->back()->withErrors('Ticket esgotado.');
+        }
+
+        // Verificar a validade do ticket
+        if ($ticket->vencimento < now()) {
+            return redirect()->back()->withErrors('Ticket expirado.');
+        }
+
+        // Verificar se o aluno tem saldo suficiente
+        $user = Auth::user();
+        if ($user->saldo < $ticket->amount) {
+            return redirect()->back()->withErrors('Saldo insuficiente.');
+        }
+
+        // Verificar se o usuário está autenticado
+        if (!Auth::check()) {
+            return redirect()->route('login')->withErrors('Você precisa estar logado para realizar a compra.');
+        }
+        
+        // Depuração: Verifique se Auth::user() está retornando o usuário
+        $user = Auth::user();
+        dd($user);  // Isso deve mostrar as informações do usuário logado
+
+        // Descontar o saldo do usuário e salvar a compra
+        $user->saldo -= $ticket->amount;
+        $user->save();
+
+        // Descontar um ticket do estoque
+        $ticket->quantidade -= 1;
+        $ticket->save();
+
+        // Registrar a compra na tabela de transações
+        Compra::create([
+            'user_id'    => $user->id,
+            'ticket_id'  => $ticket->id,
+            'quantidade' => 1,
+        ]);
+
+        return redirect()->route('tickets.index')->with('success', 'Compra realizada com sucesso!');
+    }
+
     protected function verificarDisponibilidade(Ticket $ticket)
     {
-        return $ticket->quantidade > 0;
+        if ($ticket->quantidade < 1){
+            return false;
+        }
+        return true;
+        //return $ticket->quantidade > 0;
     }
 
     protected function verificarSaldo(User $user, Ticket $ticket)
     {
-        return $user->saldo >= $ticket->amount;
+        if ($user->saldo < $ticket->valor){
+            return false;
+        }
+        return true;
+        //return $user->saldo >= $ticket->amount;
     }
 }
