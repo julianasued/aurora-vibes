@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Ticket;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Compra;
 
 class TicketController extends Controller
 {
@@ -15,6 +18,7 @@ class TicketController extends Controller
     {
         return view('tickets.index');
     }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -29,18 +33,17 @@ class TicketController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'titulo' => 'required',
-            'descricao' => 'required',
-            'vencimento' => 'required',
-            'quantidade' => 'required',
-            'amount' => 'required',
-            'user_id' => 'required',
+            'titulo'      => 'required',
+            'descricao'   => 'required',
+            'vencimento'  => 'required',
+            'quantidade'  => 'required',
+            'amount'      => 'required',
+            'user_id'     => 'required',
         ]);
 
-            Ticket::create($validatedData);
+        Ticket::create($validatedData);
 
         return redirect()->route('tickets.index')->with('success', 'Ticket criado com sucesso.');
-
     }
 
     /**
@@ -73,5 +76,15 @@ class TicketController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    protected function verificarDisponibilidade(Ticket $ticket)
+    {
+        return $ticket->quantidade > 0;
+    }
+
+    protected function verificarSaldo(User $user, Ticket $ticket)
+    {
+        return $user->saldo >= $ticket->amount;
     }
 }

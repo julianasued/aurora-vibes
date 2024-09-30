@@ -12,17 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->decimal('saldo', 10, 2)->default(0); // Ajuste o tipo e os valores padrão conforme necessário
         });
     }
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->decimal('saldo', 8, 2)->default(0);//
+            $table->dropColumn('saldo');
         });
     }
 };

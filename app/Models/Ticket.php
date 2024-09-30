@@ -15,6 +15,11 @@ class Ticket extends Model
         'amount',
         'vencimento',
         'quantidade',
-        'user_id'
+        'user_id',
     ];
+
+    public function compras()
+    {
+        return $this->hasMany(Compra::class); // Um ticket pode ter várias compras
+    }
 }
