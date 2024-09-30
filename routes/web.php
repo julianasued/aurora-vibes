@@ -31,4 +31,9 @@ Route::get('/compras', function () {
 
 });
 
+// Rotas de tickets
+Route::get('/tickets/comprar', [TicketController::class, 'showPurchasePage'])->name('tickets.comprar');
+Route::post('/tickets/comprar', [TicketController::class, 'processPurchase'])->name('tickets.processarCompra');
+Route::post('/tickets/validar/{id}', [TicketController::class, 'validatePurchase'])->name('tickets.validar');
+Route::get('/tickets/pendentes', [TicketController::class, 'showPendingPurchases'])->name('tickets.pendentes');
 Route::resource('tickets', TicketController::class);
