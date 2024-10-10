@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html dir="ltr">
-@include('includes.head')
+@extends('layouts.app')
 
-<body>
+@section('content')
     <div class="container mt-5">
         <h2 class="text-center">Cadastro de Tickets</h2>
+        <div class="mb-3">
+            <a href="{{ route('tickets.index') }}" class="btn btn-secondary">Voltar</a>
+        </div>
         <form action="{{ route('tickets.store') }}" method="POST">
             @csrf
             <!--Criação dos campos de preenchimento para cadastro de tickets-->
@@ -40,6 +41,5 @@
         </form>
     </div>
     @include('includes.scripts')
-</body>
+@endsection
 
-</html>
