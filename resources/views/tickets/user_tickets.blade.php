@@ -32,6 +32,13 @@
                         {{-- <td>
                             <a href="{{ route('tickets.editar', $compra->id) }}" class="btn btn-warning btn-sm">Editar</a>
                         </td> --}}
+                        <td>
+                        <form action="{{ route('items.destroyPurchase', $compra->id) }}" method="POST" style="display: inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja remover esta compra?')">X</button>
+                        </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

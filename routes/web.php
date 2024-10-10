@@ -46,6 +46,8 @@ Route::middleware('auth')->group(function () {
 
     Route::delete('/items/{id}', [TicketController::class, 'destroy'])->name('items.destroy');
 
+    Route::delete('/items-compras/{id}', [TicketController::class, 'destroyPurchase'])->name('items.destroyPurchase');
+
     Route::get('/tickets/informacoes-pessoais', [TicketController::class, 'showUserTickets'])->name('tickets.informacoes-pessoais');
 
     Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
