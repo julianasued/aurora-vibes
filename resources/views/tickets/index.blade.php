@@ -39,6 +39,11 @@
                             <td>{{ \Carbon\Carbon::parse($ticket->vencimento)->format('d/m/Y') }}</td>
                             <td>
                                 <a href="{{ route('tickets.editTicket', $ticket->id) }}" class="btn btn-warning btn-sm">Editar</a>
+                                <form action="{{ route('tickets.destroy', $ticket->id) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja remover este ticket?')">X</button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
