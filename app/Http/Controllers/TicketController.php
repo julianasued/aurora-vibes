@@ -15,7 +15,9 @@ class TicketController extends Controller
      */
     public function index()
     {
-        return view('tickets.index');
+        $tickets = Ticket::paginate(10);
+        
+        return view('tickets.index', compact('tickets'));
     }
     /**
      * Show the form for creating a new resource.
@@ -56,17 +58,39 @@ class TicketController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $ticket = Ticket::find($id);
+
+        if (!$ticket) {
+            return redirect()->back()->with('error', 'Ticket não encontrado.');
+        }
+
+        return view('tickets.editTicket', compact('ticket'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'titulo' => 'required|string|max:255',
+            'descricao' => 'required|string',
+            'amount' => 'required|numeric|min:0',
+            'quantidade' => 'required|integer|min:1',
+            'vencimento' => 'required|date',
+        ]);
+
+        $ticket = Ticket::find($id);
+
+        if (!$ticket) {
+            return redirect()->back()->with('error', 'Ticket não encontrado.');
+        }
+
+        $ticket->update($validatedData);
+
+        return redirect()->route('tickets.index', $ticket->id)->with('success', 'Ticket atualizado com sucesso!');
     }
 
     /**
@@ -150,5 +174,55 @@ class TicketController extends Controller
         $alunoTicket->save();
 
         return redirect()->back()->with('success', 'Compra validada com sucesso!');
+    }
+
+    public function editPurchase($id)
+    {
+        $alunoTicket = AlunoTicket::find($id);
+
+        if (!$alunoTicket || $alunoTicket->status != 'pendente') {
+            return redirect()->back()->with('error', 'A compra não pode ser editada porque já foi validada ou não existe.');
+        }
+
+        return view('tickets.edit', compact('alunoTicket'));
+    }
+
+    public function updatePurchase(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'quantidade_comprada' => 'required|integer|min:1',
+        ]);
+
+        $alunoTicket = AlunoTicket::find($id);
+
+        if (!$alunoTicket || $alunoTicket->status != 'pendente') {
+            return redirect()->back()->with('error', 'A compra não pode ser editada porque já foi validada ou não existe.');
+        }
+
+        $ticket = $alunoTicket->ticket;
+        $quantidadeDiferenca = $validatedData['quantidade_comprada'] - $alunoTicket->quantidade_comprada;
+
+        if ($ticket->quantidade < $quantidadeDiferenca) {
+            return redirect()->back()->with('error', 'Não há tickets suficientes disponíveis.');
+        }
+
+        $ticket->quantidade -= $quantidadeDiferenca;
+        $ticket->save();
+
+        $alunoTicket->quantidade_comprada = $validatedData['quantidade_comprada'];
+        $alunoTicket->total = $ticket->amount * $validatedData['quantidade_comprada'];
+        $alunoTicket->save();
+
+        return redirect()->route('tickets.editar', $alunoTicket->id)->with('success', 'Compra atualizada com sucesso!');
+    }
+
+    public function showUserTickets()
+    {
+        $user = Auth::user();
+        $compras = AlunoTicket::where('user_id', $user->id)
+            ->with('ticket')
+            ->paginate(10);
+
+        return view('tickets.user_tickets', compact('user', 'compras'));
     }
 }

@@ -10,11 +10,31 @@
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
+               <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
+                    @if(Auth::user()->isPad() || Auth::user()->isAdmin())
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+
+                        <!-- Links para Admin -->
+                        <x-nav-link :href="route('tickets.index')" :active="request()->routeIs('tickets.index')">
+                            {{ __('Gerenciar tickets') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('tickets.pendentes')" :active="request()->routeIs('tickets.pendentes')">
+                            {{ __('Validar Tickets') }}
+                        </x-nav-link>
+                    @endif
+                    @if(Auth::user() && Auth::user()->isAluno() || Auth::user()->isAdmin())
+                        <x-nav-link :href="route('tickets.comprar')" :active="request()->routeIs('tickets.comprar')">
+                            {{ __('Comprar tickets') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('tickets.informacoes-pessoais')" :active="request()->routeIs('tickets.informacoes-pessoais')">
+                            {{ __('Informações Pessoais') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
