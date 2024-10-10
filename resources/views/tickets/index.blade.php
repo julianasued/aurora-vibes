@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="container">
-        <h1>Gerenciamento de Tickets</h1>
-
+        <!-- <h1>Gerenciamento de Tickets</h1> -->
+    <br><br>
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
