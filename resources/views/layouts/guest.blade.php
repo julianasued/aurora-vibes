@@ -18,7 +18,8 @@
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
             <div>
                 <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                    <!-- <x-application-logo class="w-20 h-20 fill-current text-gray-500" /> -->
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Bras%C3%A3o_da_UESPI.svg/800px-Bras%C3%A3o_da_UESPI.svg.png" alt="" style="width:60px; height:80px;">
                 </a>
             </div>
 

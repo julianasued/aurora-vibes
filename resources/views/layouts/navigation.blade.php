@@ -6,7 +6,8 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <!-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800" /> -->
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Bras%C3%A3o_da_UESPI.svg/800px-Bras%C3%A3o_da_UESPI.svg.png" alt="" style="width:40px; height:50px;">
                     </a>
                 </div>
 
