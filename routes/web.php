@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/tickets/atualizar/{id}', [TicketController::class, 'update'])->name('tickets.atualizar');
 
 
+    Route::delete('/items/{id}', [TicketController::class, 'destroy'])->name('items.destroy');
 
     Route::get('/tickets/informacoes-pessoais', [TicketController::class, 'showUserTickets'])->name('tickets.informacoes-pessoais');
 

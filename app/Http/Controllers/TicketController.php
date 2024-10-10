@@ -98,7 +98,18 @@ class TicketController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $ticket = Ticket::find($id);
+
+        if (!$ticket) {
+            return response()->json(['message' => 'Item não encontrado.'], 404);
+        }
+
+        try {
+            $ticket->delete();
+            return redirect()->route('tickets.index')->with('success', 'Ticket removido com sucesso.');
+        } catch (\Exception $e) {
+            return redirect()->route('tickets.index')->with('error', 'Erro ao remover o ticket.');
+        }
     }
 
     public function showPurchasePage()
