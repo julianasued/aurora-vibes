@@ -1,9 +1,11 @@
-@include('includes.head')
+@extends('layouts.app')
 
-<body>
+@section('content')
     <div class="container">
+        <div class="mb-3">
+            <a href="{{ route('tickets.index') }}" class="btn btn-secondary">Voltar</a>
+        </div>
         <h1>Compras Pendentes</h1>
-
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
@@ -41,5 +43,5 @@
         </table>
     </div>
     @include('includes.scripts')
-</body>
+@endsection
 

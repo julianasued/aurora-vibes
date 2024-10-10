@@ -1,6 +1,6 @@
-@include('includes.head')
+@extends('layouts.app')
 
-<body>
+@section('content')
     <div class="container">
         <h1>Comprar Tickets</h1>
 
@@ -40,6 +40,5 @@
         </div>
     </div>
     @include('includes.scripts')
-</body>
+@endsection
 
-</html>
