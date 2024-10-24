@@ -11,13 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tickets', function (Blueprint $table) {
+        Schema::create('cardapio', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');
             $table->text('descricao');
             $table->integer('quantidade_disponível');
             $table->date('data_validade');
             $table->enum('status', ['ativo', 'inativo']);
+            $table->timestamps();
         });
     }
 
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tickets');
+        Schema::dropIfExists('cardapio');
     }
 };
