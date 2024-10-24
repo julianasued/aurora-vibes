@@ -36,6 +36,9 @@
                             {{ __('Informações Pessoais') }}
                         </x-nav-link>
                     @endif
+                        <x-nav-link :href="route('tickets.informacoes-pessoais')" :active="request()->routeIs('tickets.informacoes-pessoais')">
+                            {{ __('Cardápio') }}
+                        </x-nav-link>
                 </div>
             </div>
 
