@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('titulo');
             $table->text('descricao');
-            $table->integer('quantidade_disponível');
+            $table->integer('quantidade_disponivel');
             $table->date('data_validade');
             $table->enum('status', ['ativo', 'inativo']);
             $table->timestamps();

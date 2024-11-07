@@ -190,9 +190,9 @@ class TicketController extends Controller
         $user = $alunoTicket->user;
         $totalCompra = $alunoTicket->total;
 
-        if ($user->saldo < $totalCompra) {
-            return redirect()->back()->with('error', 'Saldo insuficiente para validar esta compra.');
-        }
+        // if ($user->saldo < $totalCompra) {
+        //     return redirect()->back()->with('error', 'Saldo insuficiente para validar esta compra.');
+        // }
 
         $user->saldo -= $totalCompra;
         $user->save();
