@@ -163,7 +163,7 @@ class TicketController extends Controller
             'quantidade_comprada' => $validatedData['quantidade_comprada'],
             'total' => $totalCompra,
             'status' => 'pendente',
-        ]);
+        ]);        
 
         return redirect()->route('tickets.comprar')->with('success', 'Compra realizada com sucesso!');
     }
@@ -249,7 +249,8 @@ class TicketController extends Controller
         $compras = AlunoTicket::where('user_id', $user->id)
             ->with('ticket')
             ->paginate(10);
-
+        $soma = $compras->sum('total');
+        $user->saldo = $soma;
         return view('tickets.user_tickets', compact('user', 'compras'));
     }
 }
