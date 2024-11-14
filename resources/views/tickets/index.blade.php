@@ -14,7 +14,7 @@
 
         <div class="mb-3">
             <a href="{{ route('tickets.create') }}" class="btn btn-success">Cadastrar Novo Ticket</a>
-            <a href="{{ route('tickets.pendentes') }}" class="btn btn-primary">Validar Tickets</a>
+            <a href="{{ route('prad.validarUsos') }}" class="btn btn-primary">Validar Tickets</a>
         </div>
 
         @if ($tickets->count() > 0)

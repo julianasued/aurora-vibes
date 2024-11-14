@@ -2,6 +2,10 @@
 
 @section('content')
     <div class="container">
+        <br>
+        <div class="mb-3">
+            <a href="{{ route('tickets.index') }}" class="btn btn-secondary">Voltar</a>
+        </div>
         <h1>Validar Usos de Tickets</h1>
 
         @if (session('success'))
@@ -31,7 +35,7 @@
                             <td>{{ $uso->user->name }}</td>
                             <td>{{ $uso->ticket->titulo }}</td>
                             <td>{{ $uso->quantidade_usada }}</td>
-                            <<td>{{ \Carbon\Carbon::parse($uso->data_uso)->format('d/m/Y') }}</td>
+                            <td>{{ \Carbon\Carbon::parse($uso->data_uso)->format('d/m/Y') }}</td>
                             <td>
                                 <form action="{{ route('prad.validarUsoPost') }}" method="POST">
                                     @csrf
