@@ -35,10 +35,11 @@
                         <x-nav-link :href="route('tickets.informacoes-pessoais')" :active="request()->routeIs('tickets.informacoes-pessoais')">
                             {{ __('Informações Pessoais') }}
                         </x-nav-link>
-                    @endif
-                        <x-nav-link :href="route('tickets.informacoes-pessoais')" :active="request()->routeIs('tickets.informacoes-pessoais')">
-                            {{ __('Cardápio') }}
+
+                        <x-nav-link :href="route('aluno.registrarUso')" :active="request()->routeIs('aluno.registrarUso')">
+                            {{ __('Usar Tickets') }}
                         </x-nav-link>
+                    @endif
                 </div>
             </div>
 

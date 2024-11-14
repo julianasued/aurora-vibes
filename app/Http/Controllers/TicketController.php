@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Ticket;
 use App\Models\AlunoTicket;
+use App\Models\AlunoUso;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -163,7 +165,7 @@ class TicketController extends Controller
             'quantidade_comprada' => $validatedData['quantidade_comprada'],
             'total' => $totalCompra,
             'status' => 'pendente',
-        ]);        
+        ]);
 
         return redirect()->route('tickets.comprar')->with('success', 'Compra realizada com sucesso!');
     }
@@ -246,11 +248,105 @@ class TicketController extends Controller
     public function showUserTickets()
     {
         $user = Auth::user();
+    
+        $totalComprado = AlunoTicket::where('user_id', $user->id)->sum('total');
+    
+        $totalUsado = AlunoUso::where('aluno_uso.user_id', $user->id)
+                    ->where('status', 'validado')
+                    ->join('tickets', 'aluno_uso.ticket_id', '=', 'tickets.id')
+                    ->sum('tickets.amount');
+    
+        $saldoAtual = $totalComprado - $totalUsado;
+    
         $compras = AlunoTicket::where('user_id', $user->id)
-            ->with('ticket')
-            ->paginate(10);
-        $soma = $compras->sum('total');
-        $user->saldo = $soma;
-        return view('tickets.user_tickets', compact('user', 'compras'));
+                    ->with('ticket')
+                    ->paginate(10);
+    
+        return view('tickets.user_tickets', compact('user', 'compras', 'saldoAtual'));
     }
+
+    public function showRegistrarUso()
+    {
+        $user = Auth::user();
+
+        $tickets = AlunoTicket::where('user_id', $user->id)
+                    ->select('ticket_id', DB::raw('SUM(quantidade_comprada) as quantidade_total'))
+                    ->groupBy('ticket_id')
+                    ->with('ticket')
+                    ->get();
+
+        foreach ($tickets as $ticket) {
+            $quantidadeJaUsada = AlunoUso::where('user_id', $user->id)
+                                ->where('ticket_id', $ticket->ticket_id)
+                                ->count();
+
+            $ticket->quantidade_usada = $quantidadeJaUsada;
+        }
+
+        return view('aluno.registrar_uso', compact('tickets'));
+    }
+
+    public function registrarUso(Request $request)
+    {
+        $request->validate([
+            'ticket_id' => 'required|exists:tickets,id',
+            'quantidade_usada' => 'required|integer|min:1',
+        ]);
+    
+        $user = Auth::user();
+        $ticketId = $request->ticket_id;
+        $quantidadeUsada = $request->quantidade_usada;
+    
+        $quantidadeComprada = AlunoTicket::where('user_id', $user->id)
+                                ->where('ticket_id', $ticketId)
+                                ->sum('quantidade_comprada');
+    
+        $quantidadeJaUsada = AlunoUso::where('user_id', $user->id)
+                                ->where('ticket_id', $ticketId)
+                                ->count(); // Contar todos os usos, independentemente do status
+    
+        $saldoDisponivel = $quantidadeComprada - $quantidadeJaUsada;
+    
+        if ($quantidadeUsada > $saldoDisponivel) {
+            return redirect()->back()->with('error', 'Você não possui tickets suficientes.');
+        }
+    
+        for ($i = 0; $i < $quantidadeUsada; $i++) {
+            AlunoUso::create([
+                'user_id' => $user->id,
+                'ticket_id' => $ticketId,
+                // 'quantidade_usada' => 1,
+                'status' => 'invalidado',
+                'data_uso' => now(),
+            ]);
+        }
+    
+        return redirect()->route('aluno.registrarUso')->with('success', 'Uso de ticket registrado e aguardando validação.');
+    }
+
+    public function showValidarUsos()
+    {
+        $usos = AlunoUso::where('status', 'invalidado')->with(['user', 'ticket'])->get();
+
+        return view('prad.validar_usos', compact('usos'));
+    }
+
+    public function validarUso(Request $request)
+    {
+        $request->validate([
+            'uso_id' => 'required|exists:aluno_uso,id',
+        ]);
+
+        $uso = AlunoUso::find($request->uso_id);
+
+        if ($uso->status === 'validado') {
+            return redirect()->back()->with('error', 'Este uso já foi validado.');
+        }
+
+        $uso->status = 'validado';
+        $uso->save();
+
+        return redirect()->route('prad.validarUsos')->with('success', 'Uso de ticket validado com sucesso.');
+    }
+
 }
