@@ -261,8 +261,12 @@ class TicketController extends Controller
         $compras = AlunoTicket::where('user_id', $user->id)
                     ->with('ticket')
                     ->paginate(10);
+        
+        $extratos = AlunoUso::where('user_id', $user->id)
+        ->with('ticket')
+        ->paginate(10);
     
-        return view('tickets.user_tickets', compact('user', 'compras', 'saldoAtual'));
+        return view('tickets.user_tickets', compact('user', 'compras', 'saldoAtual', 'extratos'));
     }
 
     public function showRegistrarUso()

@@ -23,7 +23,7 @@
                             {{ __('Gerenciar tickets') }}
                         </x-nav-link>
 
-                        <x-nav-link :href="route('tickets.pendentes')" :active="request()->routeIs('tickets.pendentes')">
+                        <x-nav-link :href="route('prad.validarUsos')" :active="request()->routeIs('prad.validarUsos')">
                             {{ __('Validar Tickets') }}
                         </x-nav-link>
                     @endif
