@@ -50,6 +50,12 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/tickets/informacoes-pessoais', [TicketController::class, 'showUserTickets'])->name('tickets.informacoes-pessoais');
 
+    Route::get('/aluno/registrar-uso', [TicketController::class, 'showRegistrarUso'])->name('aluno.registrarUso');
+    Route::post('/aluno/registrar-uso', [TicketController::class, 'registrarUso'])->name('aluno.registrarUsoPost');
+
+    Route::get('/prad/validar-usos', [TicketController::class, 'showValidarUsos'])->name('prad.validarUsos');
+    Route::post('/prad/validar-usos', [TicketController::class, 'validarUso'])->name('prad.validarUsoPost');
+
     Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
     Route::resource('tickets', TicketController::class);
 });

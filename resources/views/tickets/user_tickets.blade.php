@@ -6,7 +6,7 @@
 
     <!-- Exibir o saldo atual -->
     <div class="alert alert-info">
-        <strong>Saldo Atual: </strong> R$ {{ number_format($user->saldo, 2, ',', '.') }}
+        <strong>Saldo Atual: </strong> R$ {{ number_format($saldoAtual, 2, ',', '.') }}
     </div>
 
     @if ($compras->count() > 0)
@@ -19,6 +19,7 @@
                     <th>Quantidade Comprada</th>
                     <th>Total Pago</th>
                     <th>Status</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,15 +30,12 @@
                         <td>{{ $compra->quantidade_comprada }}</td>
                         <td>R$ {{ number_format($compra->total, 2, ',', '.') }}</td>
                         <td>{{ ucfirst($compra->status) }}</td> <!-- Exibe "Pendente" ou "Validado" -->
-                        {{-- <td>
-                            <a href="{{ route('tickets.editar', $compra->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                        </td> --}}
                         <td>
-                        <form action="{{ route('items.destroyPurchase', $compra->id) }}" method="POST" style="display: inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja remover esta compra?')">X</button>
-                        </form>
+                            <form action="{{ route('items.destroyPurchase', $compra->id) }}" method="POST" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja remover esta compra?')">X</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
@@ -52,6 +50,4 @@
         <p class="alert alert-warning">Você ainda não comprou nenhum ticket.</p>
     @endif
 </div>
-    @include('includes.scripts')
 @endsection
-
