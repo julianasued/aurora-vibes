@@ -352,5 +352,9 @@ class TicketController extends Controller
 
         return redirect()->route('prad.validarUsos')->with('success', 'Uso de ticket validado com sucesso.');
     }
-
+    public function mostrarCardapio()
+    {
+        return view('prad.cardapio');
+    }
+    
 }

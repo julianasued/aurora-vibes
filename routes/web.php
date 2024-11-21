@@ -59,6 +59,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
     Route::resource('tickets', TicketController::class);
+
+    Route::get('/prad/cardapio', [TicketController::class, 'mostrarCardapio'])->name('cardapio');
+
 });
 
 require __DIR__.'/auth.php';
