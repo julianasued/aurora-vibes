@@ -24,7 +24,6 @@
                     <tr>
                         <th>Aluno</th>
                         <th>Ticket</th>
-                        <th>Quantidade Usada</th>
                         <th>Data de Uso</th>
                         <th>Ação</th>
                     </tr>
@@ -34,7 +33,6 @@
                         <tr>
                             <td>{{ $uso->user->name }}</td>
                             <td>{{ $uso->ticket->titulo }}</td>
-                            <td>{{ $uso->quantidade_usada }}</td>
                             <td>{{ \Carbon\Carbon::parse($uso->data_uso)->format('d/m/Y') }}</td>
                             <td>
                                 <form action="{{ route('prad.validarUsoPost') }}" method="POST">

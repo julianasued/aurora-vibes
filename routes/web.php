@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TicketController;
 use App\Http\Middleware\RoleMiddleware;
 use App\Http\Controllers\MenuSemanalController;
+use App\Http\Controllers\RelatorioController;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 Route::get('/', function () {
     return view('welcome');
@@ -61,6 +63,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('tickets', TicketController::class);
 
     Route::get('/prad/cardapio', [TicketController::class, 'mostrarCardapio'])->name('cardapio');
+
+    // Relatórios
+    Route::get('/relatorio_dias_mais_usados', [RelatorioController::class, 'gerarRelatorio'])->name('relatorio');
+    Route::get('/teste-pdf', function () {
+        $pdf = Pdf::loadHTML('<h1>Teste de PDF</h1>');
+        return $pdf->stream('teste.pdf');
+    });
 
 });
 
