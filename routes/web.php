@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TicketController;
 use App\Http\Middleware\RoleMiddleware;
+use App\Http\Controllers\MenuSemanalController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -67,6 +68,7 @@ Route::get('/app', function () {
 
 });
 
+Route::resource('menu_semanal', MenuSemanalController::class);
 // Route::get('/compras', function () {
 //     return view('alunos.index');
 
