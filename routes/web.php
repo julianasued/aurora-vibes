@@ -66,19 +66,16 @@ Route::middleware('auth')->group(function () {
     Route::resource('menu_semanal', MenuSemanalController::class);
 
     // Relatórios
-    #Route::get('/relatorio_dias_mais_usados', [RelatorioController::class, 'gerarRelatorio'])->name('relatorio');
-    #Route::get('/teste-pdf', function () {
-    #    $pdf = Pdf::loadHTML('<h1>Teste de PDF</h1>');
-    #    return $pdf->stream('teste.pdf');
-    #});
+    Route::get('/relatorio_dias_mais_usados', [RelatorioController::class, 'gerarRelatorio'])->name('relatorio');
+    Route::get('/relatorio_dinheiro', [RelatorioController::class, 'gerarRelatorioDinheiro'])->name('relatorio_dinheiro');
 
+    Route::get('/relatorios', [RelatorioController::class, 'index'])->name('relatorios.index');
+    Route::post('/relatorios/gerar', [RelatorioController::class, 'gerar'])->name('relatorios.gerar');
 
-    #rota cadastro menu
-    //Route::resource('menus', MenuSemanalController::class);
-
-
-    #rota cadastro menu
-    //Route::resource('menus', MenuSemanalController::class);
+    Route::get('/teste-pdf', function () {
+        $pdf = Pdf::loadHTML('<h1>Teste de PDF</h1>');
+        return $pdf->stream('teste.pdf');
+    });
 
 });
 
