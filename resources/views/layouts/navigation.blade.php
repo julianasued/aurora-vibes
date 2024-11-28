@@ -26,11 +26,6 @@
                         <x-nav-link :href="route('prad.validarUsos')" :active="request()->routeIs('prad.validarUsos')">
                             {{ __('Validar Tickets') }}
                         </x-nav-link>
-
-                        <x-nav-link :href="route('cardapio')" :active="request()->routeIs('cardapio')">
-                            {{ __('Cardapio') }}
-                        </x-nav-link>
-
                     @endif
                     @if(Auth::user() && Auth::user()->isAluno() || Auth::user()->isAdmin())
                         <x-nav-link :href="route('tickets.comprar')" :active="request()->routeIs('tickets.comprar')">
