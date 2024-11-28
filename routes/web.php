@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('tickets', TicketController::class);
 
     Route::get('/prad/cardapio', [TicketController::class, 'mostrarCardapio'])->name('cardapio');
+    Route::resource('menu_semanal', MenuSemanalController::class);
 
     // Relatórios
     Route::get('/relatorio_dias_mais_usados', [RelatorioController::class, 'gerarRelatorio'])->name('relatorio');
@@ -70,6 +71,10 @@ Route::middleware('auth')->group(function () {
         $pdf = Pdf::loadHTML('<h1>Teste de PDF</h1>');
         return $pdf->stream('teste.pdf');
     });
+
+
+    #rota cadastro menu
+    //Route::resource('menus', MenuSemanalController::class);
 
 });
 
@@ -80,7 +85,7 @@ Route::get('/app', function () {
 
 });
 
-Route::resource('menu_semanal', MenuSemanalController::class);
+//Route::resource('menu_semanal', MenuSemanalController::class);
 // Route::get('/compras', function () {
 //     return view('alunos.index');
 

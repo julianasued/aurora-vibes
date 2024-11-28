@@ -42,12 +42,11 @@
     <div class="container mt-4">
         <h2>Cadastrar Prato</h2>
         <form id="pratoForm">
-            <!--Campo com o nome do prato-->
-            
+
             <!--DropDown com as opções do dia da semana-->
             <div class="form-group">
-                <label for="dia-da-semana">Dia da Semana</label>
-                <select class="form-control" id="dia-da-semana" required>
+                <label for="dia_semana">Dia da Semana</label>
+                <select class="form-control" id="dia_semana" name="dia_semana"  required>
                     <option value="" disabled selected>Selecione um dia</option>
                     <option value="segunda">Segunda-feira</option>
                     <option value="terca">Terça-feira</option>
@@ -57,42 +56,44 @@
                     <option value="sabado">Sábado</option>
                 </select>
             </div>
-            
+
+            <!--Campo com o nome do prato-->
             <div class="form-group"> 
-                <label for="nome">Nome do Prato</label> 
-                <input type="text" class="form-control" id="nome-prato" placeholder="Digite o nome do prato" required>
+                <label for="prato_principal">Prato Principal</label> 
+                <input type="text" class="form-control" id="prato_principal" placeholder="Digite o nome do prato principal" name="prato_principal" required>
             </div>
-
-
-
-
-
+            
             <!--Campo da guarnição-->
             <div class="form-group">
                 <label for="guarnicao">Guarnição</label>
-                <textarea class="form-control" id="guarclenicao" rows="2" placeholder="Digite a guarnição do prato"></textarea>
+                <textarea class="form-control" name="guarnicao" id="guarnicao" rows="2" placeholder="Digite a guarnição do prato"></textarea>
             </div>
 
             <!--Campo do acompanhamento-->
             <div class="form-group">
                 <label for="acompanhamento">Acompanhamento</label>
-                <textarea class="form-control" id="acompanhamento" rows="2" placeholder="Digite o acompanhamento do prato"></textarea>
+                <textarea class="form-control" id="acompanhamento" name="acompanhamento" rows="2" placeholder="Digite o acompanhamento do prato"></textarea>
             </div>
             
             <!--Campo da sobremesa-->
             <div class="form-group">
                 <label for="sobremesa">Sobremesa</label>
-                <textarea class="form-control" id="sobremesa" rows="2" placeholder="Digite a sobremesa do prato"></textarea>
+                <textarea class="form-control" name="sobremesa" id="sobremesa" rows="2" placeholder="Digite a sobremesa do prato"></textarea>
             </div>
             
-            <!--Campo da descrição-->
+            <!--Campo da salada-->
             <div class="form-group">
-                <label for="descricao">Descrição</label>
-                <textarea class="form-control" id="descricao" rows="3" placeholder="Digite a descrição do prato"></textarea>
+                <label for="descricao">Salada</label>
+                <textarea class="form-control" name="salada" id="salada" rows="3" placeholder="Digite a salada do prato"></textarea>
             </div>
-            
-            <!--Botão cadastrar (Ainda sem a lógica)-->
 
+            <!--Campo do Vegetariano-->
+            <div class="form-group">
+                <label for="descricao">Vegetariano</label>
+                <textarea class="form-control" name="vegetariano" id="vegetariano" rows="3" placeholder="Digite o vegetariano"></textarea>
+            </div>
+ 
+            <!--Botão cadastrar (Ainda sem a lógica)-->   
             <button type="submit" class="btn btn-primary">Cadastrar</button>
 
         </form>
@@ -103,12 +104,13 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Dia</th>
+                        <th>Dia da Semana</th>
+                        <th>Prato Principal</th>
                         <th>Guarnição</th>
                         <th>Acompanhamento</th>
                         <th>Sobremesa</th>
-                        <th>Descrição</th>
+                        <th>Salada</th>
+                        <th>Vegetariano</th>
                     </tr>
                 </thead>
                 <tbody id="pratosTableBody">
