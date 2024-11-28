@@ -66,13 +66,13 @@
             <!--Campo da guarnição-->
             <div class="form-group">
                 <label for="guarnicao">Guarnição</label>
-                <textarea class="form-control" name="guarnicao" id="guarnicao" rows="2" placeholder="Digite a guarnição do prato"></textarea>
+                <textarea class="form-control" id="guarnicao" rows="2" placeholder="Digite a guarnição do prato">  name="guarnicao" </textarea>
             </div>
 
             <!--Campo do acompanhamento-->
             <div class="form-group">
                 <label for="acompanhamento">Acompanhamento</label>
-                <textarea class="form-control" id="acompanhamento" name="acompanhamento" rows="2" placeholder="Digite o acompanhamento do prato"></textarea>
+                <textarea class="form-control" id="acompanhamento" rows="2" placeholder="Digite o acompanhamento do prato"> name="acompanhamento"</textarea>
             </div>
             
             <!--Campo da sobremesa-->
