@@ -41,12 +41,14 @@
 
     <div class="container mt-4">
         <h2>Cadastrar Prato</h2>
-        <form id="pratoForm">
+        <form id="pratoForm" action="/menu_semanal" method="POST">
+        @csrf
+
 
             <!--DropDown com as opções do dia da semana-->
             <div class="form-group">
                 <label for="dia_semana">Dia da Semana</label>
-                <select class="form-control" id="dia_semana" name="dia_semana"  required>
+                <select class="form-control" id="dia_semana" name="dia_semana" required>
                     <option value="" disabled selected>Selecione um dia</option>
                     <option value="segunda">Segunda-feira</option>
                     <option value="terca">Terça-feira</option>
@@ -66,31 +68,31 @@
             <!--Campo da guarnição-->
             <div class="form-group">
                 <label for="guarnicao">Guarnição</label>
-                <textarea class="form-control" id="guarnicao" rows="2" placeholder="Digite a guarnição do prato">  name="guarnicao" </textarea>
+                <textarea class="form-control" id="guarnicao" rows="2" placeholder="Digite a guarnição do prato" name="guarnicao" required> </textarea>
             </div>
 
             <!--Campo do acompanhamento-->
             <div class="form-group">
                 <label for="acompanhamento">Acompanhamento</label>
-                <textarea class="form-control" id="acompanhamento" rows="2" placeholder="Digite o acompanhamento do prato"> name="acompanhamento"</textarea>
+                <textarea class="form-control" id="acompanhamento" rows="2" placeholder="Digite o acompanhamento do prato" name="acompanhamento" required></textarea>
             </div>
             
             <!--Campo da sobremesa-->
             <div class="form-group">
                 <label for="sobremesa">Sobremesa</label>
-                <textarea class="form-control" name="sobremesa" id="sobremesa" rows="2" placeholder="Digite a sobremesa do prato"></textarea>
+                <textarea class="form-control" id="sobremesa" rows="2" placeholder="Digite a sobremesa do prato" name="sobremesa"  required></textarea>
             </div>
             
             <!--Campo da salada-->
             <div class="form-group">
                 <label for="descricao">Salada</label>
-                <textarea class="form-control" name="salada" id="salada" rows="3" placeholder="Digite a salada do prato"></textarea>
+                <textarea class="form-control" id="salada" rows="3" placeholder="Digite a salada do prato" name="salada"  required></textarea>
             </div>
 
             <!--Campo do Vegetariano-->
             <div class="form-group">
                 <label for="descricao">Vegetariano</label>
-                <textarea class="form-control" name="vegetariano" id="vegetariano" rows="3" placeholder="Digite o vegetariano"></textarea>
+                <textarea class="form-control" id="vegetariano" rows="3" placeholder="Digite o vegetariano" name="vegetariano" required></textarea>
             </div>
  
             <!--Botão cadastrar (Ainda sem a lógica)-->   
@@ -115,4 +117,4 @@
                 </thead>
                 <tbody id="pratosTableBody">
                 </tbody>
-           
+            
