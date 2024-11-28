@@ -29,7 +29,6 @@ class MenuSemanalController extends Controller
         ]);
 
         MenuSemanal::create($validated);
-
         return redirect()->route('menu_semanal.index')->with('success', 'Menu cadastrado com sucesso!');
     }
 }
