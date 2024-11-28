@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>Relatório de Uso de Tickets</title>
+    <title>Relatório de Dinheiro Arrecadado</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -71,27 +70,27 @@
                 display: none;
             }
         }
-    </style>  
+    </style>    
 </head>
-
 <body>
-    <h1>Relatório de Uso de Tickets</h1>
+    <h1>Relatório de Dinheiro Arrecadado</h1>
     <table>
-        <thead>
-            <tr>
-                <th>Data</th>
-                <th>Total de Tickets Usados</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($dados as $linha)
-                <tr>
-                    <td>{{ \Carbon\Carbon::parse($linha->dia)->format('d/m/Y') }}</td>
-                    <td>{{ $linha->total_uso }}</td>
-                </tr>
-            @endforeach
-        </tbody>
+        <tr>
+            <th>Categoria</th>
+            <th>Total (R$)</th>
+        </tr>
+        <tr>
+            <td>Total Arrecadado com Venda de Tickets</td>
+            <td>{{ number_format($dados['total_vendas'], 2, ',', '.') }}</td>
+        </tr>
+        <tr>
+            <td>Total Arrecadado com Uso de Tickets</td>
+            <td>{{ number_format($dados['total_usos'], 2, ',', '.') }}</td>
+        </tr>
+        <tr>
+            <td><strong>Diferença (Vendas - Usos)</strong></td>
+            <td class="total">{{ number_format($dados['diferenca'], 2, ',', '.') }}</td>
+        </tr>
     </table>
 </body>
-
 </html>
