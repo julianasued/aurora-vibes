@@ -22,10 +22,13 @@ class MenuSemanalController extends Controller
     {
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
-            'dia_semana' => 'required',
-            'refeicao' => 'required',
-            'data_inicio' => 'required|date',
-            'data_fim' => 'required|date',
+            'dia_semana' => 'required|date',
+            'pratro_principal' => 'required',
+            'guarnicao' => 'required',
+            'acompanhamento' => 'required',
+            'sobremesa' => 'required',
+            'salada' => 'required',
+            'vegetariano' => 'required',
         ]);
 
         MenuSemanal::create($validated);
