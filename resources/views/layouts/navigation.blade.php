@@ -22,9 +22,14 @@
                         <x-nav-link :href="route('tickets.index')" :active="request()->routeIs('tickets.index')">
                             {{ __('Gerenciar tickets') }}
                         </x-nav-link>
-
-                        <x-nav-link :href="route('prad.validarUsos')" :active="request()->routeIs('prad.validarUsos')">
+                        {{-- <x-nav-link :href="route('prad.validarUsos')" :active="request()->routeIs('prad.validarUsos')">
                             {{ __('Validar Tickets') }}
+                        </x-nav-link> --}}
+                        <x-nav-link :href="route('menu_semanal.index')" :active="request()->routeIs('menu_semanal.index')">
+                            {{ __('Menu Semanal') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('relatorios.index')" :active="request()->routeIs('relatorios.index')">
+                            {{ __('Relatórios') }}
                         </x-nav-link>
                     @endif
                     @if(Auth::user() && Auth::user()->isAluno() || Auth::user()->isAdmin())
