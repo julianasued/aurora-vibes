@@ -12,17 +12,16 @@ class MenuSemanal extends Model
     protected $table = 'menu_semanal';
 
     protected $fillable = [
-        'user_id',
-        'dia_semana',
-        'refeicao',
-        'salada',
-        'prato_principal',
-        'guarnicao',
-        'acompanhamentos',
-        'sobremesa',
+        'dia_da_semana', 
+        'refeicao', 
+        'salada', 
+        'prato_principal', 
+        'guarnicao', 
+        'acompanhamentos', 
+        'sobremesa', 
         'observacoes',
         'data_inicio',
-        'data_fim',
+        'data_fim'
     ];
 
     // Relacionamento com usuário
