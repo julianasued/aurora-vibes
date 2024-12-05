@@ -9,16 +9,19 @@ class MenuSemanal extends Model
 {
     use HasFactory;
 
-    protected $table = 'cardapio';
+    protected $table = 'menu_semanal';
 
     protected $fillable = [
-        'dia_semana', 
+        'dia_da_semana', 
+        'refeicao', 
+        'salada', 
         'prato_principal', 
         'guarnicao', 
-        'acompanhamento', 
+        'acompanhamentos', 
         'sobremesa', 
-        'salada', 
-        'vegetariano'
+        'observacoes',
+        'data_inicio',
+        'data_fim'
     ];
 
     // Relacionamento com usuário
