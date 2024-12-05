@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TicketController;
 use App\Http\Middleware\RoleMiddleware;
 use App\Http\Controllers\MenuSemanalController;
+use App\Models\MenuSemanal;
 use App\Http\Controllers\RelatorioController;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -13,7 +14,13 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $hoje = now();
+    $cardapios = MenuSemanal::whereDate('data_inicio', '<=', $hoje)
+                ->whereDate('data_fim', '>=', $hoje)
+                ->orderBy('dia_da_semana')
+                ->get();
+
+    return view('dashboard', compact('cardapios'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function () {
@@ -64,8 +71,10 @@ Route::middleware('auth')->group(function () {
 
     //Route::get('/prad/cardapio', [TicketController::class, 'mostrarCardapio'])->name('cardapio');
     // Rota da criaçao/cadastro de pratos - Thiago
+    Route::get('/menu_semanal/cardapio', [MenuSemanalController::class, 'cardapio'])->name('menu_semanal.cardapio');
+    Route::post('/menu_semanal/salvar', [MenuSemanalController::class, 'store'])->name('menu_semanal.salvar');
+    Route::delete('/menu-semanal/{id}', [MenuSemanalController::class, 'destroy'])->name('menu_semanal.destroy');
     Route::resource('menu_semanal', MenuSemanalController::class);
-    Route::post('/menu_semanal', [MenuSemanalController::class, 'store'])->name('menu_semanal.store');
     
 
     // Relatórios
@@ -94,4 +103,3 @@ Route::get('/app', function () {
 //     return view('alunos.index');
 
 // });
-
