@@ -10,20 +10,20 @@ class CreateMenuSemanalTable extends Migration
     {
         Schema::create('menu_semanal', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->enum('dia_semana', ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo']);
-            $table->enum('refeicao', ['Almoço', 'Jantar']);
+            // $table->unsignedBigInteger('user_id');
+            $table->enum('dia_da_semana', ['segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo']);
+            // $table->enum('refeicao', ['almoco', 'jantar']);
             $table->string('salada', 255)->nullable();
             $table->string('prato_principal', 255)->nullable();
             $table->string('guarnicao', 255)->nullable();
             $table->text('acompanhamentos')->nullable();
             $table->string('sobremesa', 255)->nullable();
             $table->text('observacoes')->nullable();
-            $table->date('data_inicio');
-            $table->date('data_fim');
+            $table->date('data_inicio')->nullable();
+            $table->date('data_fim')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

@@ -63,7 +63,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('tickets', TicketController::class);
 
     //Route::get('/prad/cardapio', [TicketController::class, 'mostrarCardapio'])->name('cardapio');
+    // Rota da criaçao/cadastro de pratos - Thiago
     Route::resource('menu_semanal', MenuSemanalController::class);
+    Route::post('/menu_semanal', [MenuSemanalController::class, 'store'])->name('menu_semanal.store');
+    
 
     // Relatórios
     Route::get('/relatorio_dias_mais_usados', [RelatorioController::class, 'gerarRelatorio'])->name('relatorio');
