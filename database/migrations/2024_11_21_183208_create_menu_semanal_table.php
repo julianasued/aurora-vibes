@@ -19,8 +19,8 @@ class CreateMenuSemanalTable extends Migration
             $table->text('acompanhamentos')->nullable();
             $table->string('sobremesa', 255)->nullable();
             $table->text('observacoes')->nullable();
-            $table->date('data_inicio')->nullable();
-            $table->date('data_fim')->nullable();
+            $table->date('data_inicio');
+            $table->date('data_fim');
             $table->timestamps();
 
             // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
