@@ -9,6 +9,7 @@ npm run build
 
 echo "Running composer"
 composer install --no-dev --working-dir=/var/www/html
+composer require barryvdh/laravel-dompdf
 
 echo "Caching config..."
 php artisan config:cache
@@ -20,6 +21,7 @@ echo "Running migrations..."
 php artisan migrate --force 
 
 echo "Publishing cloudinary provider..."
+php artisan vendor:publish --provider="Barryvdh\DomPDF\ServiceProvider"
 php artisan vendor:publish --provider="CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider" --tag="cloudinary-laravel-config"
 
 echo "Done!"
