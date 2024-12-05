@@ -13,10 +13,13 @@
 
                <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        {{ __('Cardápio') }}
+                    </x-nav-link>
                     @if(Auth::user()->isPad() || Auth::user()->isAdmin())
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                        {{-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                             {{ __('Cardápio') }}
-                        </x-nav-link>
+                        </x-nav-link> --}}
 
                         <!-- Links para Admin -->
                         <x-nav-link :href="route('tickets.index')" :active="request()->routeIs('tickets.index')">
