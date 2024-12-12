@@ -30,14 +30,17 @@ class RelatorioController extends Controller
                     ->groupByRaw('DATE(data_uso)')
                     ->orderBy('total_uso', 'DESC')
                     ->get();
-                
-                $pdf = PDF::loadView('relatorios.relatorio_dias_mais_usados', compact('dados'));
-                break;
+
+                return response()->json([
+                    'success' => true,
+                    'tipo' => 'uso_tickets',
+                    'nome' =>  'Relatório de uso de tickets',
+                    'dados' => $dados,
+                ]);
 
             case 'dinheiro_arrecadado':
                 $vendas = DB::table('aluno_tickets as at')
                     ->join('tickets as t', 'at.ticket_id', '=', 't.id')
-                    // ->where('at.status', 'comprado')
                     ->when($data_inicio && $data_fim, function ($query) use ($data_inicio, $data_fim) {
                         $query->whereBetween('at.created_at', [$data_inicio, $data_fim]);
                     })
@@ -54,18 +57,23 @@ class RelatorioController extends Controller
                     ->value('total_usos');
 
                 $dados = [
-                    'total_vendas' => $vendas ?? 0,
-                    'total_usos' => $usos ?? 0,
-                    'diferenca' => ($vendas ?? 0) - ($usos ?? 0)
+                    'total_vendas' => (float) ($vendas ?? 0),
+                    'total_usos' => (float) ($usos ?? 0),
+                    'diferenca' => (float) (($vendas ?? 0) - ($usos ?? 0)),
                 ];
-
-                $pdf = PDF::loadView('relatorios.dinheiro', compact('dados'));
-                break;
+                return response()->json([
+                    'success' => true,
+                    'tipo' => 'dinheiro_arrecadado',
+                    'nome' =>  'Relatório de dinheiro arrecadado',
+                    'dados' => $dados,
+                ]);
 
             default:
-                return redirect()->route('relatorios.index')->with('error', 'Tipo de relatório inválido.');
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Tipo de relatório inválido.',
+                ], 400);
         }
 
-        return $pdf->stream('relatorio.pdf');
     }
 }
