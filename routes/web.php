@@ -8,6 +8,7 @@ use App\Http\Controllers\MenuSemanalController;
 use App\Models\MenuSemanal;
 use App\Http\Controllers\RelatorioController;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Http\Controllers\QuestionarioController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -76,7 +77,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/menu-semanal/{id}', [MenuSemanalController::class, 'destroy'])->name('menu_semanal.destroy');
     Route::resource('menu_semanal', MenuSemanalController::class);
     
-
+    //Questionario
+    Route::get('/questionario/index', [QuestionarioController::class, 'index']);
+    
     // Relatórios
     Route::get('/relatorio_dias_mais_usados', [RelatorioController::class, 'gerarRelatorio'])->name('relatorio');
     Route::get('/relatorio_dinheiro', [RelatorioController::class, 'gerarRelatorioDinheiro'])->name('relatorio_dinheiro');
