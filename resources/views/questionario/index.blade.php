@@ -20,7 +20,7 @@
                             <th>Título</th>
                             <th>Descrição</th>
                             <th>Data de Criação</th>
-                            <th>Ações</th>
+                            {{-- <th>Ações</th> --}}
                         </tr>
                     </thead>
                     <tbody>
@@ -29,15 +29,15 @@
                                 <td>{{ $questionario->titulo }}</td>
                                 <td>{{ $questionario->descricao }}</td>
                                 <td>{{ $questionario->created_at->format('d/m/Y') }}</td>
-                                <td class="text-center">
-                                    <a href="{{ route('questionarios.show', $questionario->id) }}" class="btn btn-info btn-sm">Visualizar</a>
+                                {{-- <td class="text-center"> --}}
+                                    {{-- <a href="{{ route('questionarios.show', $questionario->id) }}" class="btn btn-info btn-sm">Visualizar</a> --}}
                                     {{-- <a href="{{ route('questionarios.edit', $questionario->id) }}" class="btn btn-warning btn-sm">Editar</a> --}}
                                     {{-- <form action="{{ route('questionarios.destroy', $questionario->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Tem certeza que deseja excluir este questionário?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
                                     </form> --}}
-                                </td>
+                                {{-- </td> --}}
                             </tr>
                         @endforeach
                     </tbody>

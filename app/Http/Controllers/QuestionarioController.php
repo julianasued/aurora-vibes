@@ -89,7 +89,11 @@ class QuestionarioController extends Controller
 
     public function listarPesquisas()
     {
-        $questionarios = Questionario::all(); // Ajuste conforme sua lógica de disponibilização
+        $userId = auth()->id();
+        $questionarios = Questionario::with(['respostas' => function ($query) use ($userId) {
+            $query->where('users_id', $userId);
+        }])->get();
+        
         return view('questionario.responder', compact('questionarios'));
     }
 

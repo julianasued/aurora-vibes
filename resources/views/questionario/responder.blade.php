@@ -24,9 +24,13 @@
                                 <td>{{ $questionario->titulo }}</td>
                                 <td>{{ $questionario->descricao }}</td>
                                 <td class="text-center">
-                                    <a href="{{ route('questionarios.show', $questionario->id) }}" class="btn btn-success btn-sm">
-                                        Responder
-                                    </a>
+                                    @if ($questionario->respostas->isNotEmpty())
+                                        <span class="text-success">Já respondido</span>
+                                    @else
+                                        <a href="{{ route('questionarios.show', $questionario->id) }}" class="btn btn-success btn-sm">
+                                            Responder
+                                        </a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
