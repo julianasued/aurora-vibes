@@ -35,16 +35,17 @@ class TicketController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'titulo' => 'required',
-            'descricao' => 'required',
-            'vencimento' => 'required',
-            'quantidade' => 'required',
-            'amount' => 'required',
-            'user_id' => 'required',
+            'titulo' => 'required|string|max:255',
+            'descricao' => 'required|string',
+            'vencimento' => 'required|date',
+            'quantidade' => 'required|integer',
+            'amount' => 'required|numeric|min:0',
         ]);
-
+    
+        $validatedData['user_id'] = auth()->id();
+    
         Ticket::create($validatedData);
-
+    
         return redirect()->route('tickets.index')->with('success', 'Ticket criado com sucesso.');
         
     }
