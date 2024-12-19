@@ -9,6 +9,7 @@
         <div class="card-body">
             <div class="mb-3">
                 <a href="{{ route('questionarios.create') }}" class="btn btn-success">+ Criar Novo Questionário</a>
+                <a href="{{ route('relatorios.graficos') }}" class="btn btn-info">Resultados</a>
             </div>
             @if ($questionarios->isEmpty())
                 <p class="text-center text-muted">Nenhum questionário cadastrado até o momento.</p>
