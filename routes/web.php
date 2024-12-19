@@ -84,14 +84,17 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/questionarios/{id}', [QuestionarioController::class, 'show'])->name('questionarios.show');
     Route::post('/questionarios/{id}/responder', [QuestionarioController::class, 'responder'])->name('questionarios.responder');
+    Route::get('/pesquisas', [QuestionarioController::class, 'listarPesquisas'])->name('pesquisas.index');
 
     
     // Relatórios
     Route::get('/relatorio_dias_mais_usados', [RelatorioController::class, 'gerarRelatorio'])->name('relatorio');
     Route::get('/relatorio_dinheiro', [RelatorioController::class, 'gerarRelatorioDinheiro'])->name('relatorio_dinheiro');
-
-    Route::get('/relatorios', [RelatorioController::class, 'index'])->name('relatorios.index');
+    
+    Route::get('/relatorios/filtrar-graficos', [RelatorioController::class, 'filtrarGraficos'])->name('relatorios.filtrar-graficos');
+    Route::get('/relatorios/graficos', [RelatorioController::class, 'exibirGraficos'])->name('relatorios.graficos');
     Route::post('/relatorios/gerar', [RelatorioController::class, 'gerar'])->name('relatorios.gerar');
+    Route::get('/relatorios', [RelatorioController::class, 'index'])->name('relatorios.index');
 
     Route::get('/teste-pdf', function () {
         $pdf = Pdf::loadHTML('<h1>Teste de PDF</h1>');

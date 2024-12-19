@@ -45,15 +45,15 @@ class QuestionarioController extends Controller
                 'tipo' => $pergunta['tipo'],
             ]);
 
-            // if ($pergunta['tipo'] === 'multipla_escolha' && isset($pergunta['opcoes'])) {
-            //     foreach ($pergunta['opcoes'] as $index => $opcao) {
-            //         OpcaoQuestionario::create([
-            //             'pergunta_id' => $novaPergunta->id,
-            //             'texto' => $opcao,
-            //             'valor' => $pergunta['valores'][$index] ?? null,
-            //         ]);
-            //     }
-            // }
+            if ($pergunta['tipo'] === 'multipla_escolha' && isset($pergunta['opcoes'])) {
+                foreach ($pergunta['opcoes'] as $index => $opcao) {
+                    OpcaoQuestionario::create([
+                        'pergunta_id' => $novaPergunta->id,
+                        'texto' => $opcao,
+                        'valor' => $pergunta['valores'][$index] ?? null,
+                    ]);
+                }
+            }
         }
 
         return redirect()->route('questionario.index')->with('success', 'Questionário criado com sucesso!');
@@ -86,5 +86,12 @@ class QuestionarioController extends Controller
 
         return redirect()->route('questionarios.show', $id)->with('success', 'Respostas salvas com sucesso!');
     }
+
+    public function listarPesquisas()
+    {
+        $questionarios = Questionario::all(); // Ajuste conforme sua lógica de disponibilização
+        return view('questionario.responder', compact('questionarios'));
+    }
+
     
 }

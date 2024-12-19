@@ -76,4 +76,52 @@ class RelatorioController extends Controller
         }
 
     }
+    
+    public function exibirGraficos()
+    {
+        $questionarios = DB::table('questionario')->pluck('titulo', 'id');
+
+        return view('relatorios.graficos', compact('questionarios'));
+    }
+
+    public function filtrarGraficos(Request $request)
+    {
+        $questionarioId = $request->input('questionario_id');
+
+        if (!$questionarioId) {
+            return response()->json(['error' => 'ID do questionário não fornecido.'], 400);
+        }
+
+        $dados = DB::select("
+            SELECT 
+                p.id AS pergunta_id,
+                p.texto AS pergunta,
+                o.id AS opcao_id,
+                o.texto AS opcao_resposta,
+                (SELECT COUNT(rq.id) 
+                FROM resposta_questionario rq 
+                WHERE rq.pergunta_id = p.id AND rq.opcao_id = o.id) AS total_respostas
+            FROM pergunta_questionario p
+            LEFT JOIN opcao_questionario o ON o.pergunta_id = p.id
+            WHERE p.tipo = 'multipla_escolha' AND p.questionario_id = ?
+        ", [$questionarioId]);
+
+        if (empty($dados)) {
+            return response()->json(['error' => 'Nenhum dado encontrado para este questionário.'], 404);
+        }
+
+        $formatado = [];
+        foreach ($dados as $dado) {
+            $formatado[$dado->pergunta_id]['pergunta'] = $dado->pergunta;
+            $formatado[$dado->pergunta_id]['opcoes'][] = [
+                'opcao_id' => $dado->opcao_id,
+                'opcao_resposta' => $dado->opcao_resposta,
+                'total_respostas' => $dado->total_respostas,
+            ];
+        }
+
+        return response()->json($formatado);
+    }
+
+
 }
