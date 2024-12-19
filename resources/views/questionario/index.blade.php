@@ -2,107 +2,47 @@
 
 @section('content')
 <div class="container my-5">
-    <!-- Título -->
-    <div class="card shadow-lg mb-4">
-        <div class="card-header bg-primary text-white text-center">
-            <h1>Questionário</h1>
-        </div>
-    </div>
-
-    <!-- Formulário de Cadastro -->
     <div class="card shadow-lg">
-        <div class="card-header bg-primary text-white">
-            <h2>Por favor responda, com base no seu grau de aprovação, as seguintes perguntas.</h2>
+        <div class="card-header bg-primary text-white text-center">
+            <h3 class="mb-0">Lista de Questionários</h3>
         </div>
         <div class="card-body">
-            @csrf
-
-            <!-- Primeira Pergunta -->
-            <div class="row">
-                <div class="col-md-8 mb-0">
-                    <label for="pergunta1" class="form-label">Pergunta 1</label>    <!-- "string" pergunta 1 -->             
-                </div>
-
-                <!-- Conteiner das estrelas -->
-                <div class="col-md-8 mb-3">
-                    <div class="star-rating">
-                        @for ($i = 1; $i <= 5; $i++) <!-- identificador de avaliação -->
-                            <input type="radio" id="pergunta1-star{{ $i }}" name="pergunta1" value="{{ $i }}" />
-                            <label for="pergunta1-star{{ $i }}" class="star">&#9733;</label>
-                        @endfor
-                    </div>
-                </div>
+            <div class="mb-3">
+                <a href="{{ route('questionarios.create') }}" class="btn btn-success">+ Criar Novo Questionário</a>
             </div>
-
-            <!-- Segunda Pergunta -->
-            <div class="row">
-                <div class="col-md-8 mb-0">
-                    <label for="pergunta2" class="form-label">Pergunta 2</label>   <!-- "string" pergunta 2 -->             
-                </div>
-
-                <!-- Conteiner das estrelas -->
-                <div class="col-md-8 mb-3">
-                    <div class="star-rating">
-                        @for ($i = 1; $i <= 5; $i++)    <!-- identificador de avaliação -->
-                            <input type="radio" id="pergunta2-star{{ $i }}" name="pergunta2" value="{{ $i }}" />
-                            <label for="pergunta2-star{{ $i }}" class="star">&#9733;</label>
-                        @endfor
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Terceira Pergunta -->
-            <div class="row">
-                <div class="col-md-8 mb-0">
-                    <label for="pergunta3" class="form-label">Pergunta 3</label>  <!-- "string" pergunta 3 -->              
-                </div>
-
-                <!-- Conteiner das estrelas -->
-                <div class="col-md-8 mb-3">
-                    <div class="star-rating">
-                        @for ($i = 1; $i <= 5; $i++)    <!-- identificador de avaliação -->
-                            <input type="radio" id="pergunta3-star{{ $i }}" name="pergunta3" value="{{ $i }}" />
-                            <label for="pergunta3-star{{ $i }}" class="star">&#9733;</label>
-                        @endfor
-                    </div>
-                </div>
-                <div class="col-md-8 mb-5">
-                            <label for="sobremesa" class="form-label">Comentário:</label>
-                            <textarea class="form-control" id="sobremesa" name="sobremesa" rows="2" maxlength="255" placeholder="Digite um comentário adicional (opcional)"></textarea>
-                </div>
-            </div>
-
-            <!-- Botão -->
-            <div class="d-grid">
-                <button type="submit" class="btn btn-primary btn-lg">Salvar</button>
-            </div>
+            @if ($questionarios->isEmpty())
+                <p class="text-center text-muted">Nenhum questionário cadastrado até o momento.</p>
+            @else
+                <table class="table table-bordered">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Título</th>
+                            <th>Descrição</th>
+                            <th>Data de Criação</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($questionarios as $questionario)
+                            <tr>
+                                <td>{{ $questionario->titulo }}</td>
+                                <td>{{ $questionario->descricao }}</td>
+                                <td>{{ $questionario->created_at->format('d/m/Y') }}</td>
+                                <td class="text-center">
+                                    <a href="{{ route('questionarios.show', $questionario->id) }}" class="btn btn-info btn-sm">Visualizar</a>
+                                    {{-- <a href="{{ route('questionarios.edit', $questionario->id) }}" class="btn btn-warning btn-sm">Editar</a> --}}
+                                    {{-- <form action="{{ route('questionarios.destroy', $questionario->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Tem certeza que deseja excluir este questionário?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                                    </form> --}}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @endif
         </div>
     </div>
 </div>
-
-
-<!--Criação do style da estrela-->
-<style>
-    .star-rating {
-        direction: rtl;
-        display: inline-block;
-        margin-top: 5px;
-    }
-    .star {
-        font-size: 30px;
-        color: #ccc;
-        cursor: pointer;
-    }
-    .star:hover,
-    .star:hover ~ .star {
-        color: #f39c12;
-    }
-    input[type="radio"] {
-        display: none;
-    }
-    input[type="radio"]:checked ~ .star {
-        color: #f39c12;
-    }
-</style>
 @endsection
