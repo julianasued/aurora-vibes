@@ -9,5 +9,7 @@ class Questionario extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['questionario'];
+    protected $table = 'questionario';
+
+    protected $fillable = ['titulo', 'descricao'];
 }
