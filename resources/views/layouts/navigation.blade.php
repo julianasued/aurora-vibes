@@ -34,6 +34,9 @@
                         <x-nav-link :href="route('relatorios.index')" :active="request()->routeIs('relatorios.index')">
                             {{ __('Relatórios') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('questionario.index')" :active="request()->routeIs('questionario.index')">
+                            {{ __('Questionários') }}
+                        </x-nav-link>
                     @endif
                     @if(Auth::user() && Auth::user()->isAluno() || Auth::user()->isAdmin())
                         <x-nav-link :href="route('tickets.comprar')" :active="request()->routeIs('tickets.comprar')">
@@ -46,6 +49,9 @@
 
                         <x-nav-link :href="route('aluno.registrarUso')" :active="request()->routeIs('aluno.registrarUso')">
                             {{ __('Usar Tickets') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('questionarios.show')" :active="request()->routeIs('questionarios.store')">
+                            {{ __('Questionários') }}
                         </x-nav-link>
                     @endif
                 </div>
