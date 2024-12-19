@@ -28,7 +28,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
 <script>
-    document.getElementById('selectQuestionario').addEventListener('change', function () {
+document.getElementById('selectQuestionario').addEventListener('change', function () {
     const questionarioId = this.value;
     const graficosContainer = document.getElementById('graficosContainer');
 
@@ -49,17 +49,19 @@
 
             graficosContainer.innerHTML = '';
 
-            Object.keys(dados).forEach(perguntaId => {
+            // Exibir gráficos de perguntas
+            const graficos = dados.graficos;
+            Object.keys(graficos).forEach(perguntaId => {
                 const container = document.createElement('div');
                 container.classList.add('mb-5');
                 container.innerHTML = `
-                    <h5>${dados[perguntaId].pergunta}</h5>
+                    <h5>${graficos[perguntaId].pergunta}</h5>
                     <div id="grafico-pizza-${perguntaId}" style="height: 400px;"></div>
                 `;
                 graficosContainer.appendChild(container);
 
                 const pizzaChart = echarts.init(container.querySelector(`#grafico-pizza-${perguntaId}`));
-                const data = dados[perguntaId].opcoes.map(opcao => ({
+                const data = graficos[perguntaId].opcoes.map(opcao => ({
                     name: opcao.opcao_resposta,
                     value: opcao.total_respostas,
                 }));
@@ -71,6 +73,20 @@
                         { type: 'pie', radius: '50%', data },
                     ],
                 });
+            });
+
+            // Exibir respostas textuais agrupadas por pergunta
+            const respostasTextuais = dados.respostas_textuais;
+            Object.keys(respostasTextuais).forEach(pergunta => {
+                const respostasContainer = document.createElement('div');
+                respostasContainer.classList.add('mt-4');
+                respostasContainer.innerHTML = `
+                    <h4>${pergunta}</h4>
+                    <ul class="list-group">
+                        ${respostasTextuais[pergunta].map(resposta => `<li class="list-group-item">${resposta}</li>`).join('')}
+                    </ul>
+                `;
+                graficosContainer.appendChild(respostasContainer);
             });
         })
         .catch(error => {

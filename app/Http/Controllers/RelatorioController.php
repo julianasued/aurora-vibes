@@ -87,12 +87,12 @@ class RelatorioController extends Controller
     public function filtrarGraficos(Request $request)
     {
         $questionarioId = $request->input('questionario_id');
-
+    
         if (!$questionarioId) {
             return response()->json(['error' => 'ID do questionário não fornecido.'], 400);
         }
-
-        $dados = DB::select("
+    
+        $dadosGraficos = DB::select("
             SELECT 
                 p.id AS pergunta_id,
                 p.texto AS pergunta,
@@ -105,23 +105,39 @@ class RelatorioController extends Controller
             LEFT JOIN opcao_questionario o ON o.pergunta_id = p.id
             WHERE p.tipo = 'multipla_escolha' AND p.questionario_id = ?
         ", [$questionarioId]);
-
-        if (empty($dados)) {
+    
+        $respostasTextuais = DB::select("
+            SELECT 
+                p.texto AS pergunta,
+                rq.resposta
+            FROM pergunta_questionario p
+            INNER JOIN resposta_questionario rq ON rq.pergunta_id = p.id
+            WHERE rq.resposta IS NOT NULL 
+            AND p.questionario_id = ?
+        ", [$questionarioId]);
+    
+        if (empty($dadosGraficos) && empty($respostasTextuais)) {
             return response()->json(['error' => 'Nenhum dado encontrado para este questionário.'], 404);
         }
-
-        $formatado = [];
-        foreach ($dados as $dado) {
-            $formatado[$dado->pergunta_id]['pergunta'] = $dado->pergunta;
-            $formatado[$dado->pergunta_id]['opcoes'][] = [
+    
+        $formatado = [
+            'graficos' => [],
+            'respostas_textuais' => [],
+        ];
+    
+        foreach ($dadosGraficos as $dado) {
+            $formatado['graficos'][$dado->pergunta_id]['pergunta'] = $dado->pergunta;
+            $formatado['graficos'][$dado->pergunta_id]['opcoes'][] = [
                 'opcao_id' => $dado->opcao_id,
                 'opcao_resposta' => $dado->opcao_resposta,
                 'total_respostas' => $dado->total_respostas,
             ];
         }
-
+    
+        foreach ($respostasTextuais as $resposta) {
+            $formatado['respostas_textuais'][$resposta->pergunta][] = $resposta->resposta;
+        }
+    
         return response()->json($formatado);
-    }
-
-
+    }    
 }
