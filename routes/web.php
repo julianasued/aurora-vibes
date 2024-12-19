@@ -78,7 +78,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('menu_semanal', MenuSemanalController::class);
     
     //Questionario
-    Route::get('/questionario/index', [QuestionarioController::class, 'index']);
+    Route::get('/questionarios', [QuestionarioController::class, 'index'])->name('questionario.index');
+    Route::get('/questionarios/create', [QuestionarioController::class, 'create'])->name('questionarios.create');
+    Route::post('/questionarios/store', [QuestionarioController::class, 'store'])->name('questionarios.store');
+
+    Route::get('/questionarios/{id}', [QuestionarioController::class, 'show'])->name('questionarios.show');
+    Route::post('/questionarios/{id}/responder', [QuestionarioController::class, 'responder'])->name('questionarios.responder');
+
     
     // Relatórios
     Route::get('/relatorio_dias_mais_usados', [RelatorioController::class, 'gerarRelatorio'])->name('relatorio');
