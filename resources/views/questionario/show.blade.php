@@ -28,16 +28,19 @@
                             </div>
                         @elseif ($pergunta->tipo === 'multipla_escolha')
                             <div class="col-md-12">
-                                <div class="star-rating">
+                                <div class="circle-rating">
                                     @foreach ($pergunta->opcoes as $opcao)
-                                        <input 
-                                            type="radio" 
-                                            id="pergunta-{{ $pergunta->id }}-opcao-{{ $opcao->id }}" 
-                                            name="respostas[{{ $pergunta->id }}]" 
-                                            value="{{ $opcao->id }}" />
-                                        <label 
-                                            for="pergunta-{{ $pergunta->id }}-opcao-{{ $opcao->id }}" 
-                                            class="star">&#9733;</label>
+                                        <div class="d-flex align-items-center mb-2">
+                                            <input 
+                                                type="radio" 
+                                                id="pergunta-{{ $pergunta->id }}-opcao-{{ $opcao->id }}" 
+                                                name="respostas[{{ $pergunta->id }}]" 
+                                                value="{{ $opcao->id }}" />
+                                            <label 
+                                                for="pergunta-{{ $pergunta->id }}-opcao-{{ $opcao->id }}" 
+                                                class="circle me-2"></label>
+                                            <span>{{ $opcao->texto }}</span> <!-- Exibe a legenda -->
+                                        </div>
                                     @endforeach
                                 </div>
                             </div>
@@ -53,25 +56,30 @@
 </div>
 
 <style>
-    .star-rating {
-        direction: rtl;
-        display: inline-block;
+    .circle-rating {
+        display: flex;
+        flex-direction: column;
         margin-top: 5px;
     }
-    .star {
-        font-size: 30px;
-        color: #ccc;
+    .circle {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 2px solid #ccc;
+        display: inline-block;
         cursor: pointer;
+        position: relative;
     }
-    .star:hover,
-    .star:hover ~ .star {
-        color: #f39c12;
+    .circle:hover,
+    input[type="radio"]:checked + .circle {
+        background-color: #007bff;
+        border-color: #0056b3;
     }
     input[type="radio"] {
         display: none;
     }
-    input[type="radio"]:checked ~ .star {
-        color: #f39c12;
+    .circle + span {
+        margin-left: 10px;
     }
 </style>
 @endsection
