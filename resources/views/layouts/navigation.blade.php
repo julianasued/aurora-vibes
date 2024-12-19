@@ -50,8 +50,8 @@
                         <x-nav-link :href="route('aluno.registrarUso')" :active="request()->routeIs('aluno.registrarUso')">
                             {{ __('Usar Tickets') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('questionarios.show')" :active="request()->routeIs('questionarios.store')">
-                            {{ __('Questionários') }}
+                        <x-nav-link :href="route('pesquisas.index')" :active="request()->routeIs('questionarios.store')">
+                            {{ __('Pesquisa de Satisfação') }}
                         </x-nav-link>
                     @endif
                 </div>
